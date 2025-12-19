@@ -103,7 +103,7 @@ INSERT INTO `t_product` (`product_name`, `product_desc`, `price`, `stock`, `cate
 
 -- 用户
 INSERT INTO `t_user` (`username`, `password`, `phone`, `email`, `role`) VALUES 
-('admin', '$2a$10$7JB720yubVSOfvVZa0vvHuS9LNF5z/5pTcwG9ZsmXj.yQPtjBzzO', '13800138000', 'admin@example.com', 1),
-('testuser', '$2a$10$7JB720yubVSOfvVZa0vvHuS9LNF5z/5pTcwG9ZsmXj.yQPtjBzzO', '13800138001', 'user@example.com', 2);
+('admin', '$10$Lkhflx2E2DuNC3L6fj/E0e9Yhm2V3knSVc1wcIKM60YFcJoKNd.z.', '13800138000', 'admin@example.com', 1),
+('testuser', '$10$Lkhflx2E2DuNC3L6fj/E0e9Yhm2V3knSVc1wcIKM60YFcJoKNd.z.', '13800138001', 'user@example.com', 2);
 
 -- 注：密码都是 "123456" 的BCrypt加密结果
