@@ -10,7 +10,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/seckill?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
-    password: 123456
+    password: Mysql@4399
 
   spring:
   data:
@@ -50,8 +50,8 @@ mybatis-plus:
 # MinIO配置
 minio:
   endpoint: http://localhost:9000
-  accessKey: minioadmin
-  secretKey: minioadmin
+  accessKey: admin
+  secretKey: password
   bucketName: seckill
 
 # JWT配置
