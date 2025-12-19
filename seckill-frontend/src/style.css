@@ -1,0 +1,147 @@
+:root {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei',
+    sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  color: #e2e8f0;
+  background-color: #0b1224;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --bg: #0b1224;
+  --panel: rgba(255, 255, 255, 0.04);
+  --border: rgba(255, 255, 255, 0.08);
+  --primary: #6c7cff;
+  --accent: #00d9a6;
+  --muted: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 20%, rgba(108, 124, 255, 0.18), transparent 28%),
+    radial-gradient(circle at 80% 0%, rgba(0, 217, 166, 0.14), transparent 28%),
+    radial-gradient(circle at 10% 80%, rgba(255, 255, 255, 0.06), transparent 35%), var(--bg);
+  animation: floatBg 18s ease-in-out infinite alternate;
+  color: #e2e8f0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.page {
+  padding: 16px;
+  color: #e2e8f0;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.hoverable {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hoverable:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes floatBg {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.glass {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+}
+
+.el-card {
+  background: var(--panel) !important;
+  border-color: var(--border) !important;
+  color: #e2e8f0 !important;
+}
+
+.el-table {
+  background: rgba(15, 23, 42, 0.6);
+  color: #e2e8f0;
+}
+
+.el-table td,
+.el-table th {
+  background: transparent;
+  color: #e2e8f0;
+}
+
+.el-card__body,
+.el-descriptions__label,
+.el-descriptions__content,
+.el-form-item__label {
+  color: #e2e8f0 !important;
+}
+
+.el-input__wrapper,
+.el-select .el-input__wrapper {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.el-pagination button,
+.el-pagination span {
+  color: #e2e8f0;
+}
+
+.el-breadcrumb__item,
+.el-breadcrumb__inner {
+  color: #cbd5e1 !important;
+}
+
+.el-table,
+.el-table__cell {
+  background-color: #0f172a !important;
+  color: #e2e8f0 !important;
+}
+
+.el-table th,
+.el-table tr,
+.el-table td {
+  background-color: #0f172a !important;
+  color: #e2e8f0 !important;
+}
+
+.el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: #18233d !important;
+}
+
+.el-input__inner,
+.el-select .el-input__inner {
+  color: #e2e8f0 !important;
+}
+
+.el-input__inner::placeholder,
+.el-select .el-input__inner::placeholder {
+  color: #9ca3af !important;
+}
