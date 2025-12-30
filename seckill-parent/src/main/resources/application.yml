@@ -49,7 +49,8 @@ mybatis-plus:
 
 # MinIO配置
 minio:
-  endpoint: http://localhost:9000
+  endpoint: http://8.134.151.227/:9000
+  external-endpoint: http://8.134.151.227:9000
   accessKey: admin
   secretKey: password
   bucketName: seckill

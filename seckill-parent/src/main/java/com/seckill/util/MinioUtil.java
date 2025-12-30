@@ -4,6 +4,7 @@ import io.minio.*;
 import io.minio.http.Method;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import com.seckill.config.MinioConfig;
@@ -20,6 +21,9 @@ public class MinioUtil {
 
     @Autowired
     private MinioConfig minioConfig;
+
+    @Value("${minio.external-endpoint:http://8.134.151.227/:9000}")
+    private String externalEndpoint;
 
     public boolean bucketExists(String bucketName) {
         try {
@@ -80,14 +84,13 @@ public class MinioUtil {
 
     public String getFileUrl(String bucketName, String fileName) {
         try {
-            return minioClient.getPresignedObjectUrl(
-                    GetPresignedObjectUrlArgs.builder()
-                            .method(Method.GET)
-                            .bucket(bucketName)
-                            .object(fileName)
-                            .expiry(7, TimeUnit.DAYS)
-                            .build()
-            );
+            // 使用外部endpoint生成可直接访问的URL
+            String endpoint = externalEndpoint != null && !externalEndpoint.isEmpty() ? externalEndpoint : minioConfig.getEndpoint();
+            // 移除可能的尾部斜杠
+            if (endpoint.endsWith("/")) {
+                endpoint = endpoint.substring(0, endpoint.length() - 1);
+            }
+            return endpoint + "/" + bucketName + "/" + fileName;
         } catch (Exception e) {
             log.error("获取文件URL失败", e);
             throw new RuntimeException("获取文件URL失败");
