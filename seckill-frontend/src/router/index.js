@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+﻿import { createRouter, createWebHistory } from 'vue-router';
 import { useUserStore } from '../store/user';
 
 const routes = [
@@ -35,12 +35,6 @@ const routes = [
         name: 'ProductDetail',
         component: () => import('../views/client/ProductDetail.vue'),
         meta: { title: '商品详情' },
-      },
-      {
-        path: 'categories',
-        name: 'CategoryList',
-        component: () => import('../views/client/CategoryList.vue'),
-        meta: { title: '商品分类' },
       },
       {
         path: 'seckill',
@@ -90,12 +84,6 @@ const routes = [
         name: 'AdminProducts',
         component: () => import('../views/admin/ProductManage.vue'),
         meta: { title: '商品管理', requiresAdmin: true },
-      },
-      {
-        path: 'categories',
-        name: 'AdminCategories',
-        component: () => import('../views/admin/CategoryManage.vue'),
-        meta: { title: '分类管理', requiresAdmin: true },
       },
       {
         path: 'activities',

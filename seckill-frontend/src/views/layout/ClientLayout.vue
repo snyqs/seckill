@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import { useRouter, useRoute, RouterLink, RouterView } from 'vue-router';
 import { computed } from 'vue';
 import { useUserStore } from '../../store/user';
@@ -12,7 +12,6 @@ const navs = [
   { path: '/', label: '首页' },
   { path: '/seckill', label: '秒杀活动' },
   { path: '/products', label: '商品列表' },
-  { path: '/categories', label: '分类' },
   { path: '/orders', label: '我的订单' },
 ];
 

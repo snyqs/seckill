@@ -2,8 +2,11 @@ import axios from 'axios';
 import { ElMessage } from 'element-plus';
 import { useUserStore } from '../store/user';
 
+// 后端地址：优先用 VITE_API_BASE，未配置则直连本机 8080
+const apiBase = import.meta.env.VITE_API_BASE || 'http://192.168.0.1:8080';
+
 const service = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: apiBase,
   timeout: 10000,
 });
 

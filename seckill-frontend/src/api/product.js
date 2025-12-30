@@ -16,7 +16,3 @@ export const uploadProductImage = (file) => {
   // 让浏览器自动设置 multipart boundary
   return request.post('/api/product/upload', form);
 };
-
-export const fetchCategories = () => request.get('/api/product/category/list');
-
-export const createCategory = (data) => request.post('/api/product/category', data);

@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import { useRouter, useRoute, RouterLink, RouterView } from 'vue-router';
 import { useUserStore } from '../../store/user';
 import { ElMessage } from 'element-plus';
@@ -15,7 +15,6 @@ if (!userStore.isLoggedIn || userStore.roleCode !== 1) {
 const menus = [
   { path: '/admin', label: '控制台' },
   { path: '/admin/products', label: '商品管理' },
-  { path: '/admin/categories', label: '分类管理' },
   { path: '/admin/activities', label: '秒杀活动' },
   { path: '/admin/users', label: '用户管理' },
   { path: '/admin/orders', label: '订单管理' },

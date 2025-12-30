@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import { onMounted, onBeforeUnmount, ref, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ElMessage, ElMessageBox } from 'element-plus';
@@ -70,11 +70,11 @@ const countdown = computed(() => {
 
 const canJoin = computed(() => {
   if (!activity.value) return false;
-  if (joinError.value) return false;
   return activity.value.status === 1 && (activity.value.remainingStock ?? activity.value.seckillStock) > 0;
 });
 
 const handleJoin = async () => {
+  if (joinLoading.value) return;
   if (!activity.value || !product.value) return;
   if (!userStore.isLoggedIn) {
     ElMessageBox.confirm('需要登录后才能下单，是否前往登录？', '提示', { type: 'warning' })
@@ -82,6 +82,7 @@ const handleJoin = async () => {
       .catch(() => {});
     return;
   }
+  joinError.value = '';
   joinLoading.value = true;
   try {
     const orderId = await createSeckillOrder({
@@ -90,13 +91,15 @@ const handleJoin = async () => {
       quantity: quantity.value,
       userId: userStore.user?.id,
     });
-    ElMessage.success('下单成功，订单ID：' + orderId);
+    ElMessage.success(`下单成功，订单ID：${orderId}`);
     router.push('/orders');
     joinError.value = '';
   } catch (e) {
     const msg = e?.msg || e?.message || '';
-    if (msg.includes('seckill_order') || msg.includes('不存在')) {
-      joinError.value = '订单服务未就绪（缺少 seckill_order 表），请联系后台';
+    if (msg.includes('获取锁失败')) {
+      joinError.value = '系统繁忙，请稍后重试';
+    } else if (msg.includes('seckill_order') || msg.includes('不存在')) {
+      joinError.value = '订单服务异常，请联系后台';
     } else {
       joinError.value = msg || '下单失败';
     }
@@ -108,6 +111,7 @@ const handleJoin = async () => {
 
 onMounted(() => {
   load();
+  joinError.value = '';
   timer = setInterval(() => {
     activity.value = activity.value ? { ...activity.value } : null;
   }, 1000);
@@ -125,7 +129,7 @@ const formatTime = (t) => (t ? dayjs(t).format('YYYY-MM-DD HH:mm:ss') : '-');
     <el-breadcrumb separator="/">
       <el-breadcrumb-item to="/">首页</el-breadcrumb-item>
       <el-breadcrumb-item to="/seckill">秒杀活动</el-breadcrumb-item>
-      <el-breadcrumb-item>{{ activity?.name || '详情' }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ activity?.activityName || '详情' }}</el-breadcrumb-item>
     </el-breadcrumb>
 
     <div v-if="activity" class="detail">
@@ -143,7 +147,7 @@ const formatTime = (t) => (t ? dayjs(t).format('YYYY-MM-DD HH:mm:ss') : '-');
             {{ activity.statusDesc || statusText }}
           </el-tag>
         </div>
-        <p class="muted">{{ activity.productDesc }}</p>
+        <p class="muted">{{ activity.description }}</p>
         <div class="price-box">
           <div>
             <div class="label">秒杀价</div>
@@ -164,7 +168,7 @@ const formatTime = (t) => (t ? dayjs(t).format('YYYY-MM-DD HH:mm:ss') : '-');
         <el-alert v-if="joinError" type="warning" :title="joinError" :closable="false" show-icon style="margin: 10px 0" />
         <div class="actions">
           <el-input-number v-model="quantity" :min="1" :max="5" size="small" />
-          <el-button type="primary" :disabled="!canJoin" :loading="joinLoading" @click="handleJoin">
+          <el-button type="primary" :disabled="!canJoin || joinLoading" :loading="joinLoading" @click="handleJoin">
             立即秒杀
           </el-button>
           <el-tag v-if="!canJoin" type="danger">未开始或已结束</el-tag>
@@ -176,8 +180,8 @@ const formatTime = (t) => (t ? dayjs(t).format('YYYY-MM-DD HH:mm:ss') : '-');
 
     <div v-if="product" class="product">
       <h3>商品信息</h3>
-      <p><strong>{{ product.name }}</strong></p>
-      <p class="muted">{{ product.description }}</p>
+      <p><strong>{{ product.productName }}</strong></p>
+      <p class="muted">{{ product.productDesc }}</p>
       <div class="muted">价格：￥{{ product.price }} · 库存 {{ product.stock }}</div>
     </div>
   </div>
